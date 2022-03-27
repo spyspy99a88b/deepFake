@@ -214,17 +214,17 @@ if __name__ == '__main__':
     # landmarks_points_source, tri_indices, img_source, tri_source_lst,\
     #  bb1_lst, hull_index_ori, hull_index, landmark_idx_to_list_idx = capture_best_img_from_source(source_video_loc)
 
-    source_image_loc = 'videoAndPics/4.jpg'
+    source_image_loc = 'videoAndPics/5.jpg'
     landmarks_points_source, tri_indices, img_source, tri_source_lst,\
      bb1_lst, hull_index_ori, hull_index, landmark_idx_to_list_idx = capture_source_img_from_img(source_image_loc)
-    
-    video_loc = 'videoAndPics/3.mp4'
+    print(hull_index)
+    video_loc = 'videoAndPics/1.mp4'
     cap = cv2.VideoCapture(video_loc)
     print('Start doing face swapping.')
 
     frame_init = True
     while True:
-
+        #imgm一帧图片
         success, img = cap.read()
         img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         if not success:
@@ -276,18 +276,6 @@ if __name__ == '__main__':
 
             img_source_warped = np.copy(img)
             img_source_warped = np.float32(img_source_warped)
-
-
-
-
-            # hulls = cv2.convexHull(np.array(landmarks_points_target))
-
-            # img = cv2.fillPoly(img, [hulls], (255, 0, 0))
-            # delaunary triangles
-            # get_delaunay_triangles_index(points, img)
-            # img_source_warped = np.zeros_like(img)
-
-            # img_source_warped = np.float32(img)
             
             break_check = False
             index = 0
@@ -314,6 +302,7 @@ if __name__ == '__main__':
             bb = cv2.boundingRect(np.float32(original_hull_target))
             center = (bb[0] + int(bb[2] / 2), bb[1] + int(bb[3] / 2))
             img = cv2.seamlessClone(
+                #图像叠加
                 np.uint8(img_source_warped), img, mask, center, cv2.NORMAL_CLONE
             )
 
